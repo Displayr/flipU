@@ -167,9 +167,16 @@ CopyAttributes <- function(data.without.attributes, data.with.attributes,
         attr(data.without.attributes, a) <- attr(data.with.attributes, a)
 
     if (is.list(data.without.attributes))
-        for (n in names(data.without.attributes))
-            data.without.attributes[[n]] <- CopyAttributes(data.without.attributes[[n]],
-                                                           data.with.attributes[[n]])
+    {
+        if (is.list(data.with.attributes))
+            for (n in names(data.without.attributes))
+                data.without.attributes[[n]] <- CopyAttributes(data.without.attributes[[n]],
+                                                               data.with.attributes[[n]])
+        else
+            for (n in names(data.without.attributes))
+                data.without.attributes[[n]] <- CopyAttributes(data.without.attributes[[n]],
+                                                               data.with.attributes)
+    }
 
     data.without.attributes
 }
