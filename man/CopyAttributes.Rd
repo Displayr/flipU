@@ -4,9 +4,11 @@
 \alias{CopyAttributes}
 \title{Copy attributes from one object to another}
 \usage{
-CopyAttributes(data.without.attributes, data.with.attributes,
-  attr.to.not.copy = c("dimnames", "names", "row.names", "dim", "class",
-  "levels"))
+CopyAttributes(
+  data.without.attributes,
+  data.with.attributes,
+  attr.to.not.copy = c("dimnames", "names", "row.names", "dim", "class", "levels")
+)
 }
 \arguments{
 \item{data.without.attributes}{an object to receive attributes from, such as
@@ -22,15 +24,39 @@ A copy of \code{data.without.attributes} with all the attributes
 of \code{data.with.attributes}.
 }
 \description{
-Copies the "label", "name", "question" and "questiontype" attributes
-for each for variable in a \code{\link{data.frame}}.
+Copies the "label", "name", "question" and "questiontype" attributes from
+one object to another and for each for variable in a \code{\link{data.frame}}.
 }
 \details{
 In the case when both arguments are \code{data.frame}s, any attributes
 in the columns of \code{data.with.attributes} will also be copied to
 \code{data.without.attributes} excluding \code{class} and \code{levels}
+Names are used when copying attributes in each component. Nothing will be
+copied for the case of lists with \code{NULL} names attribute.
 
-In the case when the inputs are data.frames (lists), names are used when
-copying attributes in each component.  Nothing will be copied for the case
-of lists with \code{NULL} names attribute
+In the case when \code{data.without.attributes} is not a \code{data.frame}
+and \code{data.with.attributes} is a \code{data.frame}, the
+attributes of \code{data.with.attributes} are copied over to
+\code{data.without.attributes} and the columns are not changed.
+
+Similarly, if \code{data.without.attributes} is a \code{data.frame} and
+and \code{data.with.attributes} is not a \code{data.frame} the
+attributes of \code{data.with.attributes} are copied over to
+\code{data.without.attributes} and the columns are also not changed.
+}
+\examples{
+v1 <- 1:10
+v2 <- 11:20
+attr(v1, "label") <- "label for v1"
+CopyAttributes(v2, v1) # returns v2 with the label attribute from v1
+
+df1 <- data.frame(a = 1:10, b = 11:20)
+df2 <- data.frame(a = 21:30, b = 31:40)
+attr(df1, "label") <- "label for df1"
+attr(df1$a, "label") <- "label for column a of df1"
+attr(df1$b, "label") <- "label for column b of df1"
+CopyAttributes(df2, df1) # returns df2 with label attributes (including column attributes) from df1
+
+CopyAttributes(df2, v1) # returns df2 with label attribute from v1 (columns not changed)
+CopyAttributes(v2, df1) # returns v2 with label attribute from df1 (columns not changed)
 }

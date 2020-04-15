@@ -26,10 +26,13 @@ test_that("CopyAttributes",
               expect_equal(attr(CopyAttributes(q, z), "question"), "Question")
 
               df <- data.frame(a = 1:10, b = z)
+              attr(df, "label") <- "df label"
               df1 <- data.frame(a = 1:10, b = 1:10)
+              expect_equal(attr(CopyAttributes(df1, df), "label"), "df label")
               expect_equal(attr(CopyAttributes(df1, df)$b, "question"), "Question")
 
-              expect_equal(attr(CopyAttributes(df1, z)$b, "question"), "Question")
+              expect_equal(attr(CopyAttributes(df1, z), "question"), "Question")
+              expect_equal(attr(CopyAttributes(q, df), "label"), "df label")
           })
 
 test_that("CopyAttributes: data.frame column attributes",
