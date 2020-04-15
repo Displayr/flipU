@@ -24,23 +24,25 @@ A copy of \code{data.without.attributes} with all the attributes
 of \code{data.with.attributes}.
 }
 \description{
-Copies the "label", "name", "question" and "questiontype" attributes from
-one object to another and for each for variable in a \code{\link{data.frame}}.
+Copies attributes such as "label", "name", "question" and "questiontype"
+from one object to another. If both objects are data frames,
+variables in the recipient data frame will also receive attributes from
+variables with the same name in the donor data frame.
 }
 \details{
-In the case when both arguments are \code{data.frame}s, any attributes
+In the case when both arguments are data frames, any attributes
 in the columns of \code{data.with.attributes} will also be copied to
 \code{data.without.attributes} excluding \code{class} and \code{levels}
 Names are used when copying attributes in each component. Nothing will be
 copied for the case of lists with \code{NULL} names attribute.
 
-In the case when \code{data.without.attributes} is not a \code{data.frame}
-and \code{data.with.attributes} is a \code{data.frame}, the
+In the case when \code{data.without.attributes} is not a data frame
+and \code{data.with.attributes} is a data frame, the
 attributes of \code{data.with.attributes} are copied over to
 \code{data.without.attributes} and the columns are not changed.
 
-Similarly, if \code{data.without.attributes} is a \code{data.frame} and
-and \code{data.with.attributes} is not a \code{data.frame} the
+Similarly, if \code{data.without.attributes} is a data frame and
+and \code{data.with.attributes} is not a data frame the
 attributes of \code{data.with.attributes} are copied over to
 \code{data.without.attributes} and the columns are also not changed.
 }
