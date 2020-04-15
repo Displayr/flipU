@@ -139,9 +139,11 @@ addQuotesOrComma <- function(v, term)
 #' Copy attributes from one object to another
 #'
 #' Copies attributes such as "label", "name", "question" and "questiontype"
-#' from one object to another. If both objects are data frames,
-#' variables in the recipient data frame will also receive attributes from
-#' variables with the same name in the donor data frame.
+#' from one object to another. If both objects are lists [data frames],
+#' elements [columns] in the recipient list [data frame] will also receive
+#' attributes from elements [columns] with the same name in the donor list
+#' [data frame]. The function is recursive, and will copy attributes when the
+#' inputs are nested lists.
 #' @param data.without.attributes an object to receive attributes from, such as
 #' a data.frame, list, or matrix
 #' @param data.with.attributes an object to copy attributes from
