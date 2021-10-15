@@ -29,6 +29,7 @@ jobs:
   slackNotification:
     runs-on: ubuntu-latest
     name: Slack Notification
+    needs: 'BuildCheckAndTest'
     if: always() && !cancelled()
     steps:
       - name: Slack Notification
@@ -37,5 +38,6 @@ jobs:
           repo_token: ${{ secrets.JUSTIN_GITHUB_PAT }}
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_GITHUB_NOTIFICATIONS }}
           name: flipU Github After Action Report
+          icon_url: "https://avatars.githubusercontent.com/u/13129122?s=200&v=4"
           channel: '#github-notifications'
           include_jobs: true
