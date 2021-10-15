@@ -24,3 +24,17 @@ jobs:
       - name: Run tests
         run: devtools::test()
         shell: Rscript {0}
+
+    slackNotification:
+        runs-on: ubuntu-latest
+        name: Slack Notification
+        if: always() && !cancelled()
+        steps:
+          - name: Slack Notification
+            uses: Gamesight/slack-workflow-status@master
+            with:
+              repo_token: ${{ secrets.JUSTIN_GITHUB_PAT }}
+              slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_GITHUB_NOTIFICATIONS }}
+              name: flipU Github After Action Report
+              channel: '#github-notifications'
+              include_jobs: true
