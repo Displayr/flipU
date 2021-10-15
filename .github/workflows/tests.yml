@@ -8,8 +8,8 @@ jobs:
     container:
       image: ghcr.io/displayr/r-server-skinny-base:basic
       credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        username: jrwishart
+        password: ${{ secrets.JUSTIN_GITHUB_PAT }}
     steps:
       - name: Install stuff
         run: |
