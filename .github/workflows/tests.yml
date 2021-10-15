@@ -1,6 +1,6 @@
 on:
   push:
-    branches: '**'
+  pull-request:
 
 jobs:
   push:
@@ -18,11 +18,9 @@ jobs:
           GITHUB_PAT: ${{ secrets.JUSTIN_GITHUB_PAT }}
       - name: Pull code
         uses: actions/checkout@v2
-      - name: Check directory #DELETE ME!!
-        run: ls
       - name: Run R CMD check and test
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-        run: |
-          rcmdcheck::rcmdcheck(args = c("--as-cran", "--no-manual", "--no-build-vignettes"), build_args = c("--no-build-vignettes", "--no-resave-data"))
+        run: rcmdcheck::rcmdcheck(args = c("--as-cran", "--no-manual", "--no-build-vignettes"), build_args = c("--no-build-vignettes", "--no-resave-data"))
+        shell: Rscript {0}
+      - name: Run tests
+        run: devtools::test()
         shell: Rscript {0}
