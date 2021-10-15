@@ -20,8 +20,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Check directory #DELETE ME!!
         run: ls
-      - name: Run R CMD check
+      - name: Run R CMD check and test
         uses: r-lib/actions/check-r-package@v1
-      - name: Run tests
-        run: R -e "devtools::test()"
-        working-directory: /flipU
+          build_args: '"--no-manual", "--no-build-vignettes", "--no-resave-data"'
+          args: '"--no-manual", "--no-build-vignettes"'
+  on-success: #
+    run: Install
