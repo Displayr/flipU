@@ -21,8 +21,8 @@ jobs:
       - name: Check directory #DELETE ME!!
         run: ls
       - name: Run R CMD check and test
-        uses: r-lib/actions/check-r-package@v1
-          build_args: '"--no-manual", "--no-build-vignettes", "--no-resave-data"'
-          args: '"--no-manual", "--no-build-vignettes"'
-  on-success: #
-    run: Install
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+        run: |
+          rcmdcheck::rcmdcheck(args = c("--as-cran", "--no-manual", "--no-build-vignettes"), build_args = c("--no-build-vignettes", "--no-resave-data"))
+        shell: Rscript {0}
