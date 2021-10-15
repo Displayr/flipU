@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Install stuff
         run: |
-          apt-fast install git
+          apt-fast install -y git
           R -e 'install.packages("getPass")'
           R -e 'remotes::install_github("flipDevTools")'
         env:
