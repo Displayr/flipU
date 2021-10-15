@@ -14,8 +14,6 @@ jobs:
       - name: Install stuff
         run: |
           apt-fast install -y git
-          R -e 'install.packages("getPass")'
-          R -e 'remotes::install_github("flipDevTools")'
         env:
           GITHUB_PAT: ${{ secrets.JUSTIN_GITHUB_PAT }}
       - name: Pull code
