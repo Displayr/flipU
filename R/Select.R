@@ -62,18 +62,14 @@ Select.array <- function(x, from, to, MARGIN = NULL, drop = FALSE)
     if (is.null(MARGIN))
         stop("'MARGIN needs to be specified.")
     dims <- dim(x)
-    if (!MARGIN %in% 1:length(dims))
+    if (!MARGIN %in% seq_len(length(dims)))
         stop("'MARGIN' is invalid (not compatible with dimensions of the array).")
 
     names <- dimnames(x)[[MARGIN]]
-    i <- selectIndices(names, from, to)
+    args <- c(list(x), rep(alist(, )[1L], length(dims)), drop = drop)
+    args[[MARGIN + 1L]] <- selectIndices(names, from, to)
     # Updating 'x'
-    i.string <- paste0("c(", paste0(i, collapse = ","), ")")
-    len <- length(dims)
-    pre.i <- if (MARGIN <= 1) "" else paste0(rep(",", MARGIN - 1), collapse = "")
-    post.i <- if (MARGIN >= len) "" else paste0(rep(",", len - MARGIN), collapse = "")
-    cmnd <- paste0("x[", pre.i, i.string, post.i, ", drop = ", drop, "]")
-    out <- eval(parse(text = cmnd))
+    out <- do.call(`[`, args)
     # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
     if (!inherits(x, "QTable")) out <- CopyAttributes(out, x)
     out
