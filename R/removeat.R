@@ -29,7 +29,9 @@ RemoveAt.default <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, sp
     if (is.character(at) && (is.null(names(x)) || all(!nzchar(at))))
         return(x)
     out <- x[indicesToRetain(names(x), at, length(x), ignore.case = ignore.case, split = split)]
-    CopyAttributes(out, x)
+    # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
+    if (!inherits(x, "QTable")) out <- CopyAttributes(out, x)
+    out
 }
 
 
@@ -62,7 +64,9 @@ RemoveAt.array <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spli
         else
             out <- removeFromDimension(out, a, MARGIN[m], ignore.case, split)
     }
-    CopyAttributes(out, x)
+    # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
+    if (!inherits(x, "QTable")) out <- CopyAttributes(out, x)
+    out
 }
 
 #' @inherit RemoveAt
@@ -156,4 +160,3 @@ parseIndex <- function(index, split = NULL)
         return(tmp)
     return(index)
 }
-

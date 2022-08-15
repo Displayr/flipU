@@ -1,7 +1,7 @@
 Package: flipU
 Type: Package
 Title: Utilities Used In flip Packages
-Version: 1.5.2
+Version: 1.5.3
 Author: Displayr <opensource@displayr.com>
 Maintainer: Displayr <opensource@displayr.com>
 Description: Utility functions used across multiple flip packages.

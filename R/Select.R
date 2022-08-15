@@ -19,7 +19,8 @@ Select <- function(x, from, to, MARGIN = NULL, drop = FALSE)
 Select.default <- function(x, from, to, MARGIN = NULL, drop = FALSE)
 {
     out <- x[selectIndices(names(x), from, to)]
-    CopyAttributes(out, x)
+    # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
+    if (!inherits(x, "QTable")) out <- CopyAttributes(out, x)
     out
 }
 
@@ -73,7 +74,7 @@ Select.array <- function(x, from, to, MARGIN = NULL, drop = FALSE)
     post.i <- if (MARGIN >= len) "" else paste0(rep(",", len - MARGIN), collapse = "")
     cmnd <- paste0("x[", pre.i, i.string, post.i, ", drop = ", drop, "]")
     out <- eval(parse(text = cmnd))
-    CopyAttributes(out, x)
+    # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
+    if (!inherits(x, "QTable")) out <- CopyAttributes(out, x)
     out
 }
-
