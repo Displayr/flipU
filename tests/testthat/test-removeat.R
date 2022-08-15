@@ -2,12 +2,22 @@ context("RemoveAt")
 
 # This is also tested extensively in flipTables:RemoveAtRowsAndOrColumns
 test_that("RemoveAt: Invalid 'at'", {
-    expect_error(RemoveAt(1:5, NA))
-    expect_error(RemoveAt(1:5, c(3, NA)))
-    expect_error(RemoveAt(1:5, c(3, -1)))
-    expect_error(RemoveAt(1:5, c(3, 10)))
-    expect_error(RemoveAt(1:5, c(3, 1)), NA)
-    expect_error(RemoveAt(1:5, 1.3, NA))
+    expect_error(RemoveAt(1:5, NA),
+                 "'at' must contain character (string) or integer values.",
+                 fixed = TRUE)
+    expect_error(RemoveAt(1:5, c(3, NA)),
+                 "'at' must contain character (string) or integer values.",
+                 fixed = TRUE)
+    expect_error(RemoveAt(1:5, c(3, -1)),
+                 "'at' must contain positive integers.",
+                 fixed = TRUE)
+    expect_error(RemoveAt(1:5, c(3, 10)),
+                 "'at' contains a value of 10 which is bigger than the length of 'x'.",
+                 fixed = TRUE)
+    expect_equal(RemoveAt(1:5, c(3, 1)), c(2, 4, 5))
+    expect_error(RemoveAt(1:5, 1.3, NA),
+                 "'at' must contain character (string) or integer values.",
+                 fixed = TRUE)
 })
 
 
