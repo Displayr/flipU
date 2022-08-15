@@ -98,18 +98,10 @@ removeFromDimension <- function(x, at = NULL, MARGIN = 1L, ignore.case = TRUE, s
     if (is.character(at) && is.null(names))
         return(x)
     dims <- dim(x)
-    i <- indicesToRetain(names, at, dims[MARGIN], ignore.case, split) # Indices or Logical
-    # Updating 'x'
-    i.string <- paste0("c(", paste0(i, collapse = ","), ")")
-    len <- length(dims)
-    pre.i <- if (MARGIN <= 1) "" else paste0(rep(",", MARGIN - 1), collapse = "")
-    post.i <- if (MARGIN >= len) "" else paste0(rep(",", len - MARGIN), collapse = "")
-    #print(class(x))
-    #print(MARGIN)
-    #drop <- if(is.data.frame(x) && MARGIN == 1) "" else ", drop = FALSE"
-    drop <- ", drop = FALSE"
-    cmnd <- paste0("x[", pre.i, i.string, post.i, drop, "]")
-    eval(parse(text = cmnd))
+    args <- c(list(x), rep(alist(, )[1L], length(dims)), drop = FALSE)
+    # Indices or Logical
+    args[[MARGIN + 1L]] <- indicesToRetain(names, at, dims[MARGIN], ignore.case, split)
+    do.call(`[`, args)
 }
 
 #' indicesToRetain
