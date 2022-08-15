@@ -146,7 +146,5 @@ parseIndex <- function(index, split = NULL)
     if (!is.null(split))
         index <- ConvertCommaSeparatedStringToVector(index, split)
     tmp <- suppressWarnings(as.numeric(index))
-    if (all(!is.na(tmp)))
-        return(tmp)
-    return(index)
+    if (all(!is.na(tmp))) tmp else index
 }
