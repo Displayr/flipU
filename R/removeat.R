@@ -82,9 +82,45 @@ RemoveAt.ftable <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spl
 {
     if (is.null(MARGIN))
          MARGIN <- 1:length(dim(x))
+    if (removeArrayInputsBad(x, at, MARGIN))
+        return(x)
+    at <- processAtforftableClass(at, x, MARGIN, ignore.case, split)
+    RemoveAt.array(x, at, MARGIN, ignore.case = FALSE, split = NULL)
+}
 
-    browser()
-    RemoveAt.array(x, at, MARGIN, ignore.case, split)
+#' Inspects the at input and compares against the original variable names from the
+#' flattened table.
+#' @noRd
+processAtforftableClass <- function(at, x, MARGIN, ignore.case, split)
+{
+    if (!is.list(at))
+        at <- replicate(length(MARGIN), at, simplify = FALSE)
+    dim.var.attr <- attributes(x)[c("row.vars", "col.vars")]
+    unflattened.names <- lapply(dim.var.attr, deduceUnflattenedNames)
+    mapply(findIndicesToRemove, at, unflattened.names, dim(x),
+           MoreArgs = list(ignore.case = ignore.case, split = split),
+           SIMPLIFY = FALSE)
+}
+
+findIndicesToRemove <- function(at, unflattened.names, dim.length, ignore.case, split)
+{
+    if (is.character(unflattened.names)) {
+        ind.to.retain <- indicesToRetain(unflattened.names, at,
+                                         dim.length, ignore.case, split)
+        return(which(!ind.to.retain))
+    }
+    if (ignore.case)
+        at <- tolower(at)
+    at <- TrimWhitespace(at)
+    at <- ConvertCommaSeparatedStringToVector(at, split)
+    inds.to.retain <- lapply(unflattened.names, indicesToRetain,
+                             at = at, ignore.case = FALSE, split = NULL)
+    which(!Reduce(`&`, inds.to.retain))
+}
+
+deduceUnflattenedNames <- function(var.names) {
+    if (length(var.names) == 1L && is.character(var.names[[1L]])) return(var.names[[1L]])
+    rev(expand.grid(rev(var.names)))
 }
 
 removeArrayInputsBad <- function(x, at, MARGIN)
