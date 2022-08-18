@@ -76,17 +76,25 @@ RemoveAt.matrix <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spl
     RemoveAt.array(x, at, MARGIN, ignore.case, split)
 }
 
+#' @inherit RemoveAt
+#' @export
+RemoveAt.ftable <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
+{
+    if (is.null(MARGIN))
+         MARGIN <- 1:length(dim(x))
+
+    browser()
+    RemoveAt.array(x, at, MARGIN, ignore.case, split)
+}
+
 removeArrayInputsBad <- function(x, at, MARGIN)
 {
     if (is.null(at))
         return(TRUE)
-    dimnames <- dimnames(x)
     if (is.list(at) && length(MARGIN) != length(at))
         stop("If 'at' is a list, it must have the same number of elements as MARGIN.")
-    if (is.character(at))
-        if (all(is.null(dimnames[MARGIN])))
-            return(TRUE)
-    FALSE
+    dimnames <- dimnames(x)
+    is.character(at) && all(is.null(dimnames[MARGIN]))
 }
 
 
