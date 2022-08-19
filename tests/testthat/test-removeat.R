@@ -198,3 +198,41 @@ test_that("RemoveAt: another vector and a list",
                         "NET Sugarred", "NET Sugarless", "NET"),
                 "Age in years"))
 })
+
+# Check flattened tables are filtered correctly
+
+ftbls <- readRDS("ftbls.rds")
+
+default.string <- "NET, SUM"
+all.str <- c("NET", "SUM")
+ftbl.names <- names(ftbls)
+for (i in seq_along(ftbls)) {
+    ftbl <- ftbls[[i]]
+    ftbl.name <- ftbl.names[[i]]
+    if (any(row.match <- rownames(ftbl) %in% all.str)) {
+        requested.row <- all.str[which(all.str %in% rownames(ftbl))]
+        test_that(paste0("Only ", requested.row, " row removed in ", ftbl.name), {
+            expected.tbl <- CopyAttributes(ftbl[!row.match, ], ftbl)
+            expect_equal(RemoveAt(ftbl, requested.row, 1, split = NULL, ignore.case = FALSE), expected.tbl)
+            expect_equal(RemoveAt(ftbl, tolower(requested.row), 1, split = NULL, ignore.case = TRUE), expected.tbl)
+            # Check col removed tools
+            col.to.remove <- sample.int(ncol(ftbl), size = 1)
+            expected.tbl <- CopyAttributes(ftbl[!row.match, -col.to.remove], ftbl)
+            expect_equal(RemoveAt(ftbl, list(requested.row, col.to.remove), 1:2, split = NULL, ignore.case = FALSE),
+                         expected.tbl)
+        })
+    }
+    if (any(col.match <- colnames(ftbl) %in% all.str)) {
+        requested.col <- all.str[which(all.str %in% colnames(ftbl))]
+        test_that(paste0("Only ", requested.col, " col removed in ", ftbl.name), {
+            expected.tbl <- CopyAttributes(ftbl[, !col.match], ftbl)
+            expect_equal(RemoveAt(ftbl, requested.col, 2, split = NULL, ignore.case = FALSE), expected.tbl)
+            expect_equal(RemoveAt(ftbl, tolower(requested.col), 2, split = NULL, ignore.case = TRUE), expected.tbl)
+            # Check col removed tools
+            row.to.remove <- sample.int(nrow(ftbl), size = 1)
+            expected.tbl <- CopyAttributes(ftbl[-row.to.remove, !col.match], ftbl)
+            expect_equal(RemoveAt(ftbl, list(row.to.remove, requested.col), 1:2, split = NULL, ignore.case = FALSE),
+                         expected.tbl)
+        })
+    }
+}

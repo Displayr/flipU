@@ -58,15 +58,15 @@ RemoveAt.array <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spli
     out <- x
     for (m in seq_along(MARGIN))
     {
-        a <- if(is.list(at)) at[[m]] else at
+        a <- if (is.list(at)) at[[m]] else at
         if (length(a) == 0)
             out <- out
         else
             out <- removeFromDimension(out, a, MARGIN[m], ignore.case, split)
     }
     # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
-    if (!inherits(x, "QTable")) out <- CopyAttributes(out, x)
-    out
+    if (inherits(x, "QTable")) return(out)
+    CopyAttributes(out, x)
 }
 
 #' @inherit RemoveAt
@@ -95,9 +95,9 @@ processAtforftableClass <- function(at, x, MARGIN, ignore.case, split)
 {
     if (!is.list(at))
         at <- replicate(length(MARGIN), at, simplify = FALSE)
-    dim.var.attr <- attributes(x)[c("row.vars", "col.vars")]
+    dim.var.attr <- attributes(x)[c("row.vars", "col.vars")][MARGIN]
     unflattened.names <- lapply(dim.var.attr, deduceUnflattenedNames)
-    mapply(findIndicesToRemove, at, unflattened.names, dim(x),
+    mapply(findIndicesToRemove, at, unflattened.names, dim(x)[MARGIN],
            MoreArgs = list(ignore.case = ignore.case, split = split),
            SIMPLIFY = FALSE)
 }
@@ -109,18 +109,25 @@ findIndicesToRemove <- function(at, unflattened.names, dim.length, ignore.case, 
                                          dim.length, ignore.case, split)
         return(which(!ind.to.retain))
     }
+    if (is.integer(at))
+        return(at)
     if (ignore.case)
         at <- tolower(at)
     at <- TrimWhitespace(at)
-    at <- ConvertCommaSeparatedStringToVector(at, split)
+    if (!is.null(split))
+        at <- ConvertCommaSeparatedStringToVector(at, split)
+    # Check matches within sub dim inside MARGIN (Catch "NET" in "Male - NET")
     inds.to.retain <- lapply(unflattened.names, indicesToRetain,
                              at = at, ignore.case = FALSE, split = NULL)
+    # Check matches on original labels (Catch "Male - NET" in "Male - NET")
+    original.names <- apply(unflattened.names, 1L, paste0, collapse = " - ")
+    inds.to.retain <- c(inds.to.retain, !original.names %in% at)
     which(!Reduce(`&`, inds.to.retain))
 }
 
 deduceUnflattenedNames <- function(var.names) {
     if (length(var.names) == 1L && is.character(var.names[[1L]])) return(var.names[[1L]])
-    rev(expand.grid(rev(var.names)))
+    expand.grid(var.names)
 }
 
 removeArrayInputsBad <- function(x, at, MARGIN)
@@ -148,6 +155,20 @@ removeFromDimension <- function(x, at = NULL, MARGIN = 1L, ignore.case = TRUE, s
     do.call(`[`, args)
 }
 
+determineIndicesFromChar <- function(at, names, ignore.case, split, trim.whitespace = TRUE)
+{
+    if (trim.whitespace)
+        at <- TrimWhitespace(at)
+    if (ignore.case)
+    {
+        at <- tolower(at)
+        names <- tolower(names)
+    }
+    if (!is.null(split))
+        at <- ConvertCommaSeparatedStringToVector(at, split)
+    !names %in% at
+}
+
 #' indicesToRetain
 #'
 #' Worker function for \code{RemoveAt}.
@@ -161,17 +182,7 @@ indicesToRetain <- function(names, at, length.x, ignore.case = TRUE, split = NUL
         return(1:length.x)
     # 'at' is character and able to represent a variable
     if (is.character(at))
-    {
-        at <- TrimWhitespace(at)
-        if (ignore.case)
-        {
-            at <- tolower(at)
-            names <- tolower(names)
-        }
-        if (!is.null(split))
-            at <- ConvertCommaSeparatedStringToVector(at, split)
-        return(!names %in% at)
-    }
+        return(determineIndicesFromChar(at, names, ignore.case, split))
     # 'at' is numeric
     if (anyNA(at) || !AllIntegers(at))
         stop("'at' must contain character (string) or integer values.")
