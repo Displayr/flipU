@@ -83,48 +83,6 @@ RemoveAt.ftable <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spl
     RemoveAt.array(x, at, MARGIN, ignore.case = ignore.case, split = split)
 }
 
-#' Inspects the at input and compares against the original variable names from the
-#' flattened table.
-#' @noRd
-processAtforftableClass <- function(at, x, MARGIN, ignore.case, split)
-{
-    if (!is.list(at))
-        at <- replicate(length(MARGIN), at, simplify = FALSE)
-    dim.var.attr <- attributes(x)[c("row.vars", "col.vars")][MARGIN]
-    unflattened.names <- lapply(dim.var.attr, deduceUnflattenedNames)
-    mapply(findIndicesToRemove, at, unflattened.names, dim(x)[MARGIN],
-           MoreArgs = list(ignore.case = ignore.case, split = split),
-           SIMPLIFY = FALSE)
-}
-
-findIndicesToRemove <- function(at, unflattened.names, dim.length, ignore.case, split)
-{
-    if (is.character(unflattened.names)) {
-        ind.to.retain <- indicesToRetain(unflattened.names, at,
-                                         dim.length, ignore.case, split)
-        return(which(!ind.to.retain))
-    }
-    if (is.integer(at))
-        return(at)
-    if (ignore.case)
-        at <- tolower(at)
-    at <- TrimWhitespace(at)
-    if (!is.null(split))
-        at <- ConvertCommaSeparatedStringToVector(at, split)
-    # Check matches within sub dim inside MARGIN (Catch "NET" in "Male - NET")
-    inds.to.retain <- lapply(unflattened.names, indicesToRetain,
-                             at = at, ignore.case = FALSE, split = NULL)
-    # Check matches on original labels (Catch "Male - NET" in "Male - NET")
-    original.names <- apply(unflattened.names, 1L, paste0, collapse = " - ")
-    inds.to.retain <- c(inds.to.retain, !original.names %in% at)
-    which(!Reduce(`&`, inds.to.retain))
-}
-
-deduceUnflattenedNames <- function(var.names) {
-    if (length(var.names) == 1L && is.character(var.names[[1L]])) return(var.names[[1L]])
-    expand.grid(var.names)
-}
-
 removeArrayInputsBad <- function(x, at, MARGIN)
 {
     if (is.null(at))
@@ -134,7 +92,6 @@ removeArrayInputsBad <- function(x, at, MARGIN)
     dimnames <- dimnames(x)
     is.character(at) && all(is.null(dimnames[MARGIN]))
 }
-
 
 #' @inherit RemoveAt
 removeFromDimension <- function(x, at = NULL, MARGIN = 1L, ignore.case = TRUE, split = NULL)
