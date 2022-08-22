@@ -34,8 +34,8 @@ If all elements are removed from a vector, then a 0-length vector is returned.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{data.frame}: Where only a \code{at} is provided, it is assumed
+\item \code{RemoveAt(data.frame)}: Where only a \code{at} is provided, it is assumed
 to be the variables of a data frame. Otherwise, the first \code{MARGIN}
 is assumed the rows and the second the columns.
-}}
 
+}}
