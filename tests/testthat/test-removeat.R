@@ -215,10 +215,13 @@ for (i in seq_along(ftbls)) {
             expected.tbl <- CopyAttributes(ftbl[!row.match, ], ftbl)
             expect_equal(RemoveAt(ftbl, requested.row, 1, split = NULL, ignore.case = FALSE), expected.tbl)
             expect_equal(RemoveAt(ftbl, tolower(requested.row), 1, split = NULL, ignore.case = TRUE), expected.tbl)
+            expect_equal(RemoveAt(ftbl, default.string, MARGIN = 1, split = "[;,]"), expected.tbl)
             # Check col removed tools
             col.to.remove <- sample.int(ncol(ftbl), size = 1)
             expected.tbl <- CopyAttributes(ftbl[!row.match, -col.to.remove], ftbl)
             expect_equal(RemoveAt(ftbl, list(requested.row, col.to.remove), 1:2, split = NULL, ignore.case = FALSE),
+                         expected.tbl)
+            expect_equal(RemoveAt(ftbl, list(default.string, col.to.remove), 1:2, split = "[;,]"),
                          expected.tbl)
         })
     }
@@ -228,10 +231,13 @@ for (i in seq_along(ftbls)) {
             expected.tbl <- CopyAttributes(ftbl[, !col.match], ftbl)
             expect_equal(RemoveAt(ftbl, requested.col, 2, split = NULL, ignore.case = FALSE), expected.tbl)
             expect_equal(RemoveAt(ftbl, tolower(requested.col), 2, split = NULL, ignore.case = TRUE), expected.tbl)
+            expect_equal(RemoveAt(ftbl, default.string, MARGIN = 2, split = "[;,]"), expected.tbl)
             # Check col removed tools
             row.to.remove <- sample.int(nrow(ftbl), size = 1)
             expected.tbl <- CopyAttributes(ftbl[-row.to.remove, !col.match], ftbl)
             expect_equal(RemoveAt(ftbl, list(row.to.remove, requested.col), 1:2, split = NULL, ignore.case = FALSE),
+                         expected.tbl)
+            expect_equal(RemoveAt(ftbl, list(row.to.remove, default.string), 1:2, split = "[;,]"),
                          expected.tbl)
         })
     }

@@ -80,12 +80,7 @@ RemoveAt.matrix <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spl
 #' @export
 RemoveAt.ftable <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 {
-    if (is.null(MARGIN))
-         MARGIN <- 1:length(dim(x))
-    if (removeArrayInputsBad(x, at, MARGIN))
-        return(x)
-    at <- processAtforftableClass(at, x, MARGIN, ignore.case, split)
-    RemoveAt.array(x, at, MARGIN, ignore.case = FALSE, split = NULL)
+    RemoveAt.array(x, at, MARGIN, ignore.case = ignore.case, split = split)
 }
 
 #' Inspects the at input and compares against the original variable names from the
