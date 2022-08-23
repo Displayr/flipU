@@ -199,7 +199,7 @@ test_that("RemoveAt: another vector and a list",
                 "Age in years"))
 })
 
-test_that("ftables are returned", {
+test_that("DS-3889 Standard ftable behaviour", {
     arr.dimnames <- list(letters[1:4],
                          c("foo", "bar", "baz"),
                          1:2)
