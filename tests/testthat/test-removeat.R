@@ -199,6 +199,18 @@ test_that("RemoveAt: another vector and a list",
                 "Age in years"))
 })
 
+test_that("ftables are returned", {
+    arr.dimnames <- list(letters[1:4],
+                         c("foo", "bar", "baz"),
+                         1:2)
+    input.arr <- array(24:1, dim = 4:2, dimnames = arr.dimnames)
+
+    ftbl <- ftable(input.arr)
+    expect_true(is.null(dimnames(ftbl)))
+    expect_equal(RemoveAt(ftbl, as.character(1:2), 2), ftbl)
+    expect_equal(RemoveAt(ftbl, 1:3, 1), ftbl[-(1:3), ])
+})
+
 # Check flattened tables are filtered correctly
 
 tbls <- readRDS("tbls.rds")

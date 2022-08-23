@@ -79,12 +79,25 @@ RemoveAt.matrix <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spl
     RemoveAt.array(x, at, MARGIN, ignore.case, split)
 }
 
-#' @describeIn RemoveAt Applies the array method so that the dimnames of \code{ftable}
-#                       are used to determine the rows or columns in the removal.
+#' @describeIn RemoveAt If any characters are used in \code{at} but the \code{ftable}
+#'                      doesn't have dimnames then the original \code{ftable} is returned.
+#'                      If integer references are used, then the appropriate dim is
+#'                      removed using the array method.
+#'                      If the \code{ftable} has dimnames and characters are used \code{at}
+#'                      then array method is used so that the dimnames of \code{ftable}
+#'                      are used to determine the rows or columns in the removal.
+#'                      In all cases, the \code{row.var} and \code{col.var} attributes
+#'                      are not retained in the output.
 #' @export
 RemoveAt.ftable <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 {
-    RemoveAt.array(x, at, MARGIN, ignore.case, split)
+    character.requests <- is.character(at) ||
+                          (is.list(at) && any(vapply(at), is.character, logical(1L)))
+    no.dimnames <- is.null(dimnames(x))
+    if (no.dimnames && character.requests) return(x)
+    out <- RemoveAt.array(x, at, MARGIN, ignore.case, split)
+    attr(out, "row.vars") <- attr(out, "col.vars") <- NULL
+    out
 }
 
 removeArrayInputsBad <- function(x, at, MARGIN)
