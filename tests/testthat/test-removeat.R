@@ -201,7 +201,9 @@ test_that("RemoveAt: another vector and a list",
 
 # Check flattened tables are filtered correctly
 
-ftbls <- readRDS("ftbls.rds")
+tbls <- readRDS("tbls.rds")
+
+ftbls <- lapply(tbls, ftable)
 
 default.string <- "NET, SUM"
 all.str <- c("NET", "SUM")
