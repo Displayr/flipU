@@ -80,7 +80,7 @@ RemoveAt.matrix <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spl
 #' @export
 RemoveAt.ftable <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 {
-    RemoveAt.array(x, at, MARGIN, ignore.case = ignore.case, split = split)
+    RemoveAt.array(x, at, MARGIN, ignore.case, split)
 }
 
 removeArrayInputsBad <- function(x, at, MARGIN)
