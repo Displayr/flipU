@@ -3,11 +3,20 @@
 \name{RemoveAt}
 \alias{RemoveAt}
 \alias{RemoveAt.data.frame}
+\alias{RemoveAt.array}
+\alias{RemoveAt.matrix}
+\alias{RemoveAt.ftable}
 \title{\code{RemoveAt}}
 \usage{
 RemoveAt(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 
 \method{RemoveAt}{data.frame}(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
+
+\method{RemoveAt}{array}(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
+
+\method{RemoveAt}{matrix}(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
+
+\method{RemoveAt}{ftable}(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 }
 \arguments{
 \item{x}{The object from which the elements are to be removed.}
@@ -30,12 +39,22 @@ An object of the same class as \code{x}.
 }
 \description{
 Removes one or more elements from an object. Dimensions are never
-If all elements are removed from a vector, then a 0-length vector is returned.
+             If all elements are removed from a vector, then a 0-length vector is returned.
 }
 \section{Methods (by class)}{
 \itemize{
 \item \code{RemoveAt(data.frame)}: Where only a \code{at} is provided, it is assumed
 to be the variables of a data frame. Otherwise, the first \code{MARGIN}
 is assumed the rows and the second the columns.
+
+\item \code{RemoveAt(array)}: If \code{MARGIN} is not provided, the \code{at} argument
+is used along all margins. If \code{at} is a list, then each
+list element is sequentially used along each \code{MARGIN}
+If \code{at} is not a list, then it all elements inside is
+are removed across all margins.
+
+\item \code{RemoveAt(matrix)}: Applies the array method
+
+\item \code{RemoveAt(ftable)}: Applies the array method so that the dimnames of \code{ftable}
 
 }}

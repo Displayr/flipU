@@ -1,7 +1,7 @@
 #' \code{RemoveAt}
 #'
 #' @description Removes one or more elements from an object. Dimensions are never
-#' If all elements are removed from a vector, then a 0-length vector is returned.
+#'              If all elements are removed from a vector, then a 0-length vector is returned.
 #' @param x The object from which the elements are to be removed.
 #' @param at A \code{\link{vector}} or indicating which elements are to be removed.
 #' When \code{at} is \code{\link{character}} elements with this name are removed. When \code{at}
@@ -19,7 +19,6 @@ RemoveAt <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NU
     UseMethod("RemoveAt")
 }
 
-#' @inherit RemoveAt
 #' @export
 RemoveAt.default <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 {
@@ -47,7 +46,11 @@ RemoveAt.data.frame <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE,
     RemoveAt.array(x, at, MARGIN, ignore.case, split)
 }
 
-#' @inherit RemoveAt
+#' @describeIn RemoveAt If \code{MARGIN} is not provided, the \code{at} argument
+#'                      is used along all margins. If \code{at} is a list, then each
+#'                      list element is sequentially used along each \code{MARGIN}
+#'                      If \code{at} is not a list, then it all elements inside is
+#'                      are removed across all margins.
 #' @export
 RemoveAt.array <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 {
@@ -69,14 +72,15 @@ RemoveAt.array <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, spli
     out
 }
 
-#' @inherit RemoveAt
+#' @describeIn RemoveAt Applies the array method
 #' @export
 RemoveAt.matrix <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 {
     RemoveAt.array(x, at, MARGIN, ignore.case, split)
 }
 
-#' @inherit RemoveAt
+#' @describeIn RemoveAt Applies the array method so that the dimnames of \code{ftable}
+#                       are used to determine the rows or columns in the removal.
 #' @export
 RemoveAt.ftable <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 {

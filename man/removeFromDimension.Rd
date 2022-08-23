@@ -33,5 +33,5 @@ An object of the same class as \code{x}.
 }
 \description{
 Removes one or more elements from an object. Dimensions are never
-If all elements are removed from a vector, then a 0-length vector is returned.
+             If all elements are removed from a vector, then a 0-length vector is returned.
 }
