@@ -1,0 +1,48 @@
+## tic Circle CI template: linux-deploy
+## revision date: 2022-08-28
+version: 2.1
+jobs:
+  r-release:
+    docker:
+      - image: rocker/tidyverse:latest
+        auth:
+          username: mwmclean
+          password: $DOCKERHUB_PAT
+
+    steps:
+      - checkout
+
+      # create a unique env var for the cache. Unfortunately normal env vars
+      # are not picked up by the cache, therefore this workaround is needed.
+      # See https://discuss.circleci.com/t/cannot-use-circle-yml-environment-variables-in-cache-keys/10994/7
+      - run: echo "$(date '+%d-%m')-r-release" > /tmp/_tmp_file
+      - restore_cache:
+          key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
+
+      # install deps and check pkg ---------------------------------------------
+      - run:
+          name: "[r-release] Install dependencies"
+          command: |
+            sudo apt update && sudo apt install -y ccache pandoc libgit2-dev libharfbuzz-dev libfribidi-dev libprotoc-dev libprotobuf-dev libv8-dev librsvg2-dev libmpfr-dev libnlopt-dev
+            echo -e 'options(Ncpus = 4, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
+            R -q -e 'devtools::install_deps(dependencies = TRUE)'
+
+      - run:
+          name: "Check package"
+          shell: Rscript
+          command: rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), build_args = c("--no-build-vignettes"))
+
+      - run:
+          name: "Show testthat output"
+          command: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+
+      # save R pkg cache -------------------------------------------------------
+      - save_cache:
+          key: R-package-library-{{ checksum "/tmp/_tmp_file" }}
+          paths:
+            - /usr/local/lib/R/site-library
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - r-release
