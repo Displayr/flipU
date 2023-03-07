@@ -29,8 +29,7 @@ jobs:
 
       - run:
           name: "Check package"
-          shell: Rscript
-          command: rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), build_args = c("--no-build-vignettes"))
+          command: Rscript 'rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), build_args = c("--no-build-vignettes"))'
 
       - run:
           name: "Show testthat output"
