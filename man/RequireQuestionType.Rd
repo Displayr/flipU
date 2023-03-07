@@ -7,14 +7,14 @@
 RequireQuestionType(variables, required.type, message.prefix, message.suffix)
 }
 \arguments{
-\item{variables}{A list or data frame containing the variables to check.}
+\item{variables}{A list containing the variables (or questions) to check.}
 
 \item{required.type}{A string indicating the required questiontype value.
 Should be one of: "PickAny", "PickOne", "PickOneMulti", "Number",
 "NumberMulti", "NumberGrid", "PickAnyGrid", "Text", "TextMulti",
 "Ranking", or "Experiment".}
 
-\item{message.prefix}{Text to display in the error message before the 
+\item{message.prefix}{Text to display in the error message before the
 required question type / structure.}
 
 \item{message.suffix}{Text to display at the end of the message.}
