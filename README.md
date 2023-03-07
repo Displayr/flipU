@@ -1,3 +1,4 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Displayr/flipU/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Displayr/flipU/tree/master)
 [![](https://travis-ci.org/Displayr/flipU.svg?branch=master)](https://travis-ci.org/Displayr/flipU/)
 [![Coverage Status](https://coveralls.io/repos/github/Displayr/flipU/badge.svg?branch=master)](https://coveralls.io/github/Displayr/flipU?branch=master)
 # flipU
