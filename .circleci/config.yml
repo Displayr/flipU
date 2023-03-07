@@ -29,11 +29,14 @@ jobs:
 
       - run:
           name: "Check package"
-          command: Rscript 'rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), build_args = c("--no-build-vignettes"))'
+          command: R -q -e 'rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes", "--no-tests"), build_args = c("--no-build-vignettes"))'
 
       - run:
-          name: "Show testthat output"
-          command: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+          name: "Run unit tests"
+          command: R -q -e 'capture.output(devtools::test(reporter = "junit"), file = "testhat.xml")'
+
+      - store_test_results:
+          path: testthat.xml
 
       # save R pkg cache -------------------------------------------------------
       - save_cache:
