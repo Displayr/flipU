@@ -33,7 +33,7 @@ jobs:
 
       - run:
           name: "Run unit tests"
-          command: R -q -e 'capture.output(devtools::test(reporter = "junit"), file = "testhat.xml")'
+          command: R -q -e 'capture.output(devtools::test(reporter = "junit"), file = "testthat.xml")'
 
       - store_test_results:
           path: testthat.xml
