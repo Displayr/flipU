@@ -48,7 +48,7 @@ jobs:
       - save_cache:
           key: R-package-library-{{ checksum "/tmp/R_version" }}
           paths:
-            - $HOME/R/library
+            - R/library
 
 workflows:
   build-and-check-R-package:
