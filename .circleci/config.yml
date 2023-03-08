@@ -51,6 +51,6 @@ jobs:
             - $HOME/R/library
 
 workflows:
-  build-and-deploy:
+  build-and-check-R-package:
     jobs:
       - r-release
