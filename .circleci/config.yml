@@ -37,7 +37,7 @@ jobs:
           name: "Run unit tests"
           command:
             - >-
-	      R -e 'capture.output(out \<<- devtools::test(reporter = "junit"), file = "testthat.xml");
+              R -e 'capture.output(out \<<- devtools::test(reporter = "junit"), file = "testthat.xml");
               results <- unlist(lapply(out, `[[`, "results"), recursive = FALSE);
               q(status = as.integer(!all(vapply(results, function(res) class(res)[1], "") ==
               "expectation_success")), save = "no")'
