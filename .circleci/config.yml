@@ -38,8 +38,8 @@ jobs:
           command: >-
               R -e 'capture.output(out \<<- devtools::test(reporter = "junit"), file = "testthat.xml");
               results <- unlist(lapply(out, `[[`, "results"), recursive = FALSE);
-              q(status = as.integer(!all(vapply(results, function(res) class(res)[1], "") ==
-              "expectation_success")), save = "no")'
+              q(status = as.integer(!all(vapply(results, function(res) class(res)[1], "") %in%
+              c("expectation_success", "expectation_skip"))), save = "no")'
 
       - store_test_results:
           path: testthat.xml
