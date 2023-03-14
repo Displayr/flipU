@@ -88,8 +88,10 @@ test_that("DS-4287: Helper function to check dual-response-none variables in Q/D
 })
 
 test_that("Don't split text that is marked as having originated from a control", {
-    control.string <- SetIsStringIsFromControl("This is a comma, separated string")
+    control.string <- StringIsFromControl("This is a comma, separated string")
+    expect_true(attr(control.string, "is.control"))
     expect_equal(ConvertCommaSeparatedStringToVector(control.string), control.string)
+
     #Control in Displayr can be NULL if user not selected anything yet
-    expect_null(SetIsStringFromControl(NULL))
+    expect_null(StringIsFromControl(NULL))
 })
