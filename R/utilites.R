@@ -378,7 +378,8 @@ GetTranslatedQuestionType <- function(type, product.name) {
 #'
 #' @export
 SetIsStringIsFromControl <- function(control.output) {
-    attr(control.output, "is.control") <- TRUE
+    if (!is.null(control.output))
+        attr(control.output, "is.control") <- TRUE
     control.output
 }
 
