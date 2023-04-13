@@ -50,4 +50,6 @@ jobs:
 workflows:
   build-and-check-R-package:
     jobs:
-      - r-release
+      - r-release:
+          context:
+            - r_packages
