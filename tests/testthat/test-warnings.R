@@ -46,7 +46,9 @@ test_that("Intercept exceptions",
 
 test_that("Bar test",
 {
-    expect_error(warning("Foo warning"), NA)
+    expect_error({warning("Foo warning")
+        warning("Second  foo warning")
+    }, NA)
 })
 
 test_that("Foo test",
