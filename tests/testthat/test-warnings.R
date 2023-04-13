@@ -48,3 +48,9 @@ test_that("Bar test",
 {
     expect_error(warning("Foo warning"), NA)
 })
+
+test_that("Foo test",
+{
+    skip("Skipping just because'")
+    expect_error(stop("Foo warning"), "Foo warning")
+})
