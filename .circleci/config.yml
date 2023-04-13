@@ -27,7 +27,7 @@ jobs:
             R -q -e 'if (!dir.exists("~/R/library")) dir.create("~/R/library", recursive = TRUE)'
             echo -e 'options(Ncpus = 4, repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
             echo -e '.libPaths("~/R/library")' >> $HOME/.Rprofile
-	    R -q -e 'remotes::install_github("Displayr/flipDevTools")'
+            R -q -e 'remotes::install_github("Displayr/flipDevTools")'
             R -q -e 'devtools::install_deps(dependencies = TRUE)'
 
       - run:
