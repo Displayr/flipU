@@ -43,3 +43,8 @@ test_that("Intercept exceptions",
         },"Y")
     })
 })
+
+test_that("Bar test",
+{
+    expect_error(warning("Foo warning"), NA)
+})
