@@ -36,8 +36,7 @@ jobs:
 
       - run:
           name: "Run unit tests"
-          command: >-
-              R -e 'q(status = flipDevTools::RunTestsOnCircleCI(), save = "no")'
+          command: R -e 'q(status = flipDevTools::RunTestsOnCircleCI(), save = "no")'
 
       - store_test_results:
           path: testthat.xml
