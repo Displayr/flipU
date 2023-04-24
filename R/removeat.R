@@ -22,6 +22,7 @@ RemoveAt <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NU
 #' @export
 RemoveAt.default <- function(x, at = NULL, MARGIN = NULL, ignore.case = TRUE, split = NULL)
 {
+    stop("I'm broken")
     if (is.null(at))
         return(x)
     at <- parseIndex(unlist(at), split = split)
