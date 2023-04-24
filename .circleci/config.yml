@@ -1,9 +1,24 @@
 version: 2.1
+
+parameters:
+    trigger-message:
+        type: string
+        default: ""
+    remote-deps:
+        type: string
+        default: "flipTransformations@DS-4393"
+    plugins-branch:
+        type: string
+        default: "master"
+
 jobs:
   r-release:
     machine:
         image: ubuntu-2204:current
     resource_class: small
+    environment:
+        REMOTE_DEPS: <<pipeline.parameters.remote-deps>>
+        PLUGINS_BRANCH: <<pipeline.parameters.plugins-branch>>
 
     steps:
       - checkout
@@ -34,7 +49,7 @@ jobs:
             echo -e ".libPaths(c('$HOME/R/library', '/usr/lib/R/site-library', '/usr/lib/R/library'))" | \
             sudo tee -a $R_HOME/etc/Rprofile.site
             R -q -e 'remotes::install_github("Displayr/flipDevTools")'
-            R -q -e 'devtools::install_deps(dependencies = TRUE)'
+            R -q -e 'flipDevTools::InstallDeps(dependencies = TRUE)'
 
       - save_cache:
           key: R-package-library-{{ checksum "/tmp/cache_vers" }}-{{ checksum "/tmp/R_version" }}
@@ -61,6 +76,10 @@ jobs:
 
       - store_test_results:
           path: testthat.xml
+
+      - run:
+          name: "Trigger reverse dependencies"
+          command: R -e 'flipDevTools::TriggerRevDepPipelines()'
 
 workflows:
   build-and-check-R-package:
