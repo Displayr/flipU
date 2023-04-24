@@ -12,7 +12,7 @@ parameters:
         default: "master"
     triggered-packages:
         type: string
-        default: ""
+        default: "flipTables,flipRegression,flipChart,flipChartTests,flipStandardCharts,flipChartTests2"
 
 jobs:
   r-release:
