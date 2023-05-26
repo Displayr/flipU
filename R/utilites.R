@@ -392,3 +392,41 @@ SetIsStringIsFromControl <- StringIsFromControl
 getIsStringFromControl <- function(x) {
     isTRUE(attr(x, "is.control"))
 }
+
+
+#' Ensure that variables being returned to Displayr are
+#' as small as they can be.
+#'
+#' Given a vector, matrix or data frame containing variables
+#' which are to be added to a Data Set in Displayr,
+#' remove any unecessary attributes that would cause
+#' the variables to be larger (in bytes) than they
+#' need to be. Variable attributes are not accessible
+#' once the variable has been added to a data set. The 
+#' only exception is attributes for factors, which
+#' should be kept. If input is a data frame, return
+#' it as a list, since data frames must have row names
+#' that do not need to be kept.
+#' @param x A vector, matrix, data frame, or list
+#' containing variables that are to be added to a
+#' Displayr Data Set.
+#' @export
+TidyDataForRVariables <- function(x) {
+    if (is.list(x)) {
+        return(lapply(x, tidyVariableForDisplayr))
+    }
+
+    tidyVariableForDisplayr(x)
+}
+
+tidyVariableForDisplayr <- function(x) {
+    if (is.matrix(x)) {
+        rownames(x) <- NULL
+    }
+
+    if (is.vector(x)) {
+        names(x) <- NULL
+    }
+
+    x
+}
