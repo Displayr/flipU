@@ -423,7 +423,7 @@ removeNamesForVariableSet <- function(x) {
     if (is.matrix(x)) {
         rownames(x) <- NULL
     }
-    if (is.vector(x)) {
+    if (is.vector(x) || is.factor(x)) {
         names(x) <- NULL
     }
     x

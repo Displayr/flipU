@@ -101,25 +101,30 @@ test_that("DS-4211: Names attributes are removed and data frames are returned as
     num <- c(1,2,3,4,5,6,7)
     fac <- factor(num)
     txt <- letters[num]
-    setNames(num, txt)
-    setNames(fac, txt)
-    setNames(txt, txt)
+    num <- setNames(num, txt)
+    fac <- setNames(fac, txt)
+    txt <- setNames(txt, txt)
+    
+    x <- TidyDataForRVariableSet(num)
+    expect_null(attr(x, "names"))
+    expect_true(is.vector(x))
 
+    x <- TidyDataForRVariableSet(fac)
+    expect_null(attr(x, "names"))
+    expect_true(is.factor(x))
+
+    x <- TidyDataForRVariableSet(txt)
+    expect_null(attr(x, "names"))
+    expect_true(is.character(x))
+    
     mat <- matrix(1:12, nrow = 4)
     rownames(mat) <- letters[1:4]
     colnames(mat) <- letters[1:3]
+    expect_null(rownames(TidyDataForRVariableSet(mat)))
 
     df <- data.frame(fac, num, txt)
-
-    expect_null(attr(TidyDataForRVariableSet(num), "names"))
-    expect_null(attr(TidyDataForRVariableSet(fac), "names"))
-    expect_null(attr(TidyDataForRVariableSet(txt), "names"))
-    
     tidied.df <- TidyDataForRVariableSet(df)
     expect_false(is.data.frame(tidied.df))
     expect_true(is.list(tidied.df))
-    expect_null(attr(tidied.df[[1]], "names"))
-    expect_null(attr(tidied.df[[2]], "names"))
-    expect_null(attr(tidied.df[[3]], "names"))
 
-});
+})
