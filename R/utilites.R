@@ -411,22 +411,20 @@ getIsStringFromControl <- function(x) {
 #' containing variables that are to be added to a
 #' Displayr Data Set.
 #' @export
-TidyDataForRVariables <- function(x) {
+TidyDataForRVariableSet <- function(x) {
     if (is.list(x)) {
-        return(lapply(x, tidyVariableForDisplayr))
+        return(lapply(x, removeNamesForVariableSet))
     }
 
-    tidyVariableForDisplayr(x)
+    removeNamesForVariableSet(x)
 }
 
-tidyVariableForDisplayr <- function(x) {
+removeNamesForVariableSet <- function(x) {
     if (is.matrix(x)) {
         rownames(x) <- NULL
     }
-
     if (is.vector(x)) {
         names(x) <- NULL
     }
-
     x
 }
