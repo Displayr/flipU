@@ -5,7 +5,7 @@ legacy.q.table <- not.q.table
 attr(legacy.q.table, "questions") <- c("foo", "bar")
 attr(legacy.q.table, "name") <- "cool.q.table"
 classed.q.table <- not.q.table
-class(classed.q.table) <- "QTable"
+class(classed.q.table) <- "qTable"
 
 test_that("Legacy Q Tables identified", {
     expect_true(IsQTable(legacy.q.table))

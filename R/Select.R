@@ -20,7 +20,7 @@ Select.default <- function(x, from, to, MARGIN = NULL, drop = FALSE)
 {
     out <- x[selectIndices(names(x), from, to)]
     # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
-    if (!inherits(x, "QTable")) out <- CopyAttributes(out, x)
+    if (!inherits(x, "qTable")) out <- CopyAttributes(out, x)
     out
 }
 
@@ -71,6 +71,6 @@ Select.array <- function(x, from, to, MARGIN = NULL, drop = FALSE)
     # Updating 'x'
     out <- do.call(`[`, args)
     # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
-    if (!inherits(x, "QTable")) out <- CopyAttributes(out, x)
+    if (!inherits(x, "qTable")) out <- CopyAttributes(out, x)
     out
 }
