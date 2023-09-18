@@ -14,7 +14,7 @@ Logical value \code{TRUE} if the input is identified as being a Q Table,
         \code{FALSE} otherwise
 }
 \description{
-Inspects for the qTable class or checks if attributes exist
+Inspects for the QTable class or checks if attributes exist
 to identify legacy Q Table with the \code{"questions"} and
 and \code{"name"} attributes
 }
