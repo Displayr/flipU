@@ -274,7 +274,7 @@ DIM <- function(x)
 
 #' Identify Q Table objects
 #'
-#' Inspects for the qTable class or checks if attributes exist
+#' Inspects for the QTable class or checks if attributes exist
 #' to identify legacy Q Table with the \code{"questions"} and
 #' and \code{"name"} attributes
 #'
@@ -287,7 +287,7 @@ DIM <- function(x)
 #' @export
 IsQTable <- function(x)
 {
-    inherits(x, "qTable") ||
+    inherits(x, "QTable") ||
     (!is.null(attr(x, "questions")) && !is.null(attr(x, "name")))
 }
 

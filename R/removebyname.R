@@ -56,7 +56,7 @@ RemoveByName <- function(x, rnames, sep = "[;,]")
         stop("Removing entries gives empty vector.")
 
     # Subscripting QTables (verbs:::`[.QTable`) already updates attributes
-    if (!inherits(x, "qTable")) y <- x[setdiff(xnames, rnames)]
+    if (!inherits(x, "QTable")) y <- x[setdiff(xnames, rnames)]
     y
 }
 
