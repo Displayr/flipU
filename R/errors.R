@@ -19,5 +19,5 @@ CheckVariableLengths <- function(variable.list, list.name)
 #' @return An errorCondition with the "userError" class
 #' @export
 Stop <- function(x, ...) {
-    errorCondition(x, ..., class = "userError") |> stop()
+    errorCondition(x, ..., class = "UserError") |> stop()
 }
