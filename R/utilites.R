@@ -226,6 +226,9 @@ TrimCharacterAndWhitespace <- function(x, characters)
 #' @export
 MakeUniqueNames <- function(names, suffix = " ", prefix = "")
 {
+    ind.na <- which(is.na(names))
+    if (length(ind.na) > 0)
+        names[ind.na] <- "NA"
     ind.dup <- which(duplicated(names))
     if (nchar(suffix) < 1)
         stop("'suffix' cannot be empty")

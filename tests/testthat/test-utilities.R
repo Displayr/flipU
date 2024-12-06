@@ -49,6 +49,7 @@ test_that("Trim character and white space",
 test_that("MakeUniqueNames",
 {
     expect_equal(MakeUniqueNames(rep(letters[1:3], 1:3)), c("a", "b", "b ", "c", "c ", "c  "))
+    expect_equal(MakeUniqueNames(c("A", "B", "C", NA, "A")), c("A", "B", "C", "NA", "A "))
 })
 
 test_that("EscapeRegexSymbols",
@@ -104,7 +105,7 @@ test_that("DS-4211: Names attributes are removed and data frames are returned as
     num <- setNames(num, txt)
     fac <- setNames(fac, txt)
     txt <- setNames(txt, txt)
-    
+
     x <- TidyDataForRVariableSet(num)
     expect_null(attr(x, "names"))
     expect_true(is.vector(x))
@@ -116,7 +117,7 @@ test_that("DS-4211: Names attributes are removed and data frames are returned as
     x <- TidyDataForRVariableSet(txt)
     expect_null(attr(x, "names"))
     expect_true(is.character(x))
-    
+
     mat <- matrix(1:12, nrow = 4)
     rownames(mat) <- letters[1:4]
     colnames(mat) <- letters[1:3]
