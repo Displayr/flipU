@@ -14,10 +14,10 @@ CheckVariableLengths <- function(variable.list, list.name)
 }
 
 #' Error condition with special class to identify user errors
-#' @param x The message to pass to the user
-#' @param ... Additional arguments to pass to errorCondition
+#' @param ... The arguments to pass to errorCondition
 #' @return An errorCondition with the "UserError" class
 #' @export
-Stop <- function(x, ...) {
-    errorCondition(x, ..., class = "UserError") |> stop()
+Stop <- function(..., domain = NULL) {
+    message <- .makeMessage(..., domain = domain)
+    errorCondition(message, class = "UserError") |> stop()
 }
