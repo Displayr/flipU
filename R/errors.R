@@ -14,10 +14,16 @@ CheckVariableLengths <- function(variable.list, list.name)
 }
 
 #' Error condition with special class to identify user errors
-#' @param ... The arguments to pass to errorCondition
-#' @return An errorCondition with the "UserError" class
+#' @param call. Unused parameter, used to absorb usage from previous calls using stop
+#' @inheritParams base::stop
 #' @export
-Stop <- function(..., domain = NULL) {
+Stop <- function(..., call. = FALSE, domain = NULL) {
+    # Using a custom error condition and throwing using `stop` assumes the message
+    # is already constructed from the custom error condition, so call. parameter is redundant
+    call.used <- match.call()[["call."]]
+    if (is.logical(call.used)) {
+        warning("call. argument not supported in Stop, the call is never part of the error message")
+    }
     message <- .makeMessage(..., domain = domain)
     errorCondition(message, class = "UserError") |> stop()
 }

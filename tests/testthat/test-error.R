@@ -13,6 +13,11 @@ test_that("Errors are constructed correctly", {
     foo <- function(x) {
         Stop("Incorrect selection ", x, " used over ", "the dots")
     }
-    foo.error <- foo(1) |> capture_error()
-    foo.error[["message"]] |> expect_equal("Incorrect selection 1 used over the dots")
+    dots.working <- foo(1) |> capture_error()
+    dots.working[["message"]] |> expect_equal("Incorrect selection 1 used over the dots")
+    # Warning if using call.
+    warning.option <- getOption("warn")
+    options(warn = 2L)
+    on.exit(options(warn = warning.option))
+    Stop("Incorrect selection", call. = FALSE) |> expect_error("call. argument not supported in Stop")
 })
