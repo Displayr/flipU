@@ -4,15 +4,17 @@
 \alias{Stop}
 \title{Error condition with special class to identify user errors}
 \usage{
-Stop(x, ...)
+Stop(..., call. = FALSE, domain = NULL)
 }
 \arguments{
-\item{x}{The message to pass to the user}
+\item{...}{zero or more objects which can be coerced to character
+    (and which are pasted together with no separator) or a single
+    condition object.}
 
-\item{...}{Additional arguments to pass to errorCondition}
-}
-\value{
-An errorCondition with the "userError" class
+\item{call.}{Unused parameter, used to absorb usage from previous calls using stop}
+
+\item{domain}{see \code{\link[base]{gettext}}.  If \code{NA}, messages will
+    not be translated.}
 }
 \description{
 Error condition with special class to identify user errors
