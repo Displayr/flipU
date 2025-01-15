@@ -1,0 +1,113 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: flipU 1.6.1\n"
+"POT-Creation-Date: 2025-01-15 12:17+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Select.R:30
+msgid "There are no names to select from."
+msgstr ""
+
+#: Select.R:33
+msgid "'"
+msgstr ""
+
+#: Select.R:33
+msgid "' is not one of the names."
+msgstr ""
+
+#: Select.R:36
+msgid "is not one of the names."
+msgstr ""
+
+#: Select.R:54
+msgid "'MARGIN needs to be specified. A 1 for rows and 2 for columns."
+msgstr ""
+
+#: Select.R:63
+msgid "'MARGIN needs to be specified."
+msgstr ""
+
+#: Select.R:66
+msgid "'MARGIN' is invalid (not compatible with dimensions of the array)."
+msgstr ""
+
+#: errors.R:12
+msgid "have differing lengths. Please ensure"
+msgstr ""
+
+#: errors.R:13
+msgid "that they are from the same data set or have the same length."
+msgstr ""
+
+#: errors.R:25
+msgid ""
+"call. argument not supported in Stop, the call is never part of the error "
+"message"
+msgstr ""
+
+#: lookups.R:21
+msgid "''"
+msgstr ""
+
+#: lookups.R:21
+msgid "'appears in the dictionnary multiple times. The first has been used."
+msgstr ""
+
+#: properties.R:298
+msgid "No data."
+msgstr ""
+
+#: removeat.R:108
+msgid "If 'at' is a list, it must have the same number of elements as MARGIN."
+msgstr ""
+
+#: removeat.R:157
+msgid "'at' must contain character (string) or integer values."
+msgstr ""
+
+#: removeat.R:159
+msgid "'at' must contain positive integers."
+msgstr ""
+
+#: removeat.R:161
+msgid "'at' contains a value of"
+msgstr ""
+
+#: removeat.R:161
+msgid "which is bigger than the length of 'x'."
+msgstr ""
+
+#: removebyname.R:56
+msgid "Removing entries gives empty vector."
+msgstr ""
+
+#: utilites.R:234
+msgid "'suffix' cannot be empty"
+msgstr ""
+
+#: utilites.R:370
+msgid "is not a valid Question Type to supply."
+msgstr ""
+
+#: warnings.R:148
+msgid "The selected data come from more than one Data Set."
+msgstr ""
+
+#: warnings.R:149
+msgid "The data sets may have different lengths, and the cases"
+msgstr ""
+
+#: warnings.R:150
+msgid "may not be in the same order. The data sets used are:"
+msgstr ""
+
+#: warnings.R:151
+msgid ","
+msgstr ""
