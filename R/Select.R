@@ -30,10 +30,10 @@ selectIndices <- function(names, from, to)
         gettextf("There are no names to select from.") |> StopUserError()
     frm <- match(from, names)
     if (is.na(frm))
-        gettextf("%s is not one of the names.", sQuote(from)) |> StopUserError()
+        gettextf("%s is not one of the names.", sQuote(from, q = FALSE)) |> StopUserError()
     t <- match(to, names)
     if (is.na(t))
-        gettextf("%s is not one of the names.", sQuote(to)) |> StopUserError()
+        gettextf("%s is not one of the names.", sQuote(to, q = FALSE)) |> StopUserError()
     frm:t
 }
 

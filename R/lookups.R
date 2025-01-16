@@ -18,7 +18,7 @@ LookupName <- function(value, dictionary)
         return(NULL)
     nms <- names(dictionary)[matches]
     if (length(nms) > 1) {
-        gettextf("%s appears in the dictionnary multiple times. The first has been used.", sQuote(value)) |>
+        gettextf("%s appears in the dictionnary multiple times. The first has been used.", sQuote(value, q = FALSE)) |>
             warning()
     }
     nms[1]
