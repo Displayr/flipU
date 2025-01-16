@@ -105,7 +105,7 @@ removeArrayInputsBad <- function(x, at, MARGIN)
     if (is.null(at))
         return(TRUE)
     if (is.list(at) && length(MARGIN) != length(at))
-        stop("If 'at' is a list, it must have the same number of elements as MARGIN.")
+        gettextf("If 'at' is a list, it must have the same number of elements as MARGIN.") |> StopUserError()
     dimnames <- dimnames(x)
     is.character(at) && all(is.null(dimnames[MARGIN]))
 }
@@ -154,11 +154,11 @@ indicesToRetain <- function(names, at, length.x, ignore.case = TRUE, split = NUL
         return(determineIndicesFromChar(at, names, ignore.case, split))
     # 'at' is numeric
     if (anyNA(at) || !AllIntegers(at))
-        stop("'at' must contain character (string) or integer values.")
+        gettextf("'at' must contain character (string) or integer values.") |> StopUserError()
     if (any(at < 1))
-        stop("'at' must contain positive integers.")
+        gettextf("'at' must contain positive integers.") |> StopUserError()
     if (max(at) > length.x)
-        stop("'at' contains a value of ", max(at), " which is bigger than the length of 'x'.")
+        gettextf("'at' contains a value of %d which is bigger than the length of 'x'.", max(at)) |> StopUserError()
     -at
 }
 

@@ -231,7 +231,7 @@ MakeUniqueNames <- function(names, suffix = " ", prefix = "")
         names[ind.na] <- "NA"
     ind.dup <- which(duplicated(names))
     if (nchar(suffix) < 1)
-        stop("'suffix' cannot be empty")
+        gettextf("'suffix' cannot be empty") |> StopUserError()
     for (i in ind.dup)
     {
         new.name <- paste0(prefix, names[i], suffix)
@@ -342,6 +342,9 @@ RequireQuestionType <- function(variables, required.type, message.prefix, messag
 #'
 #' @export
 GetTranslatedQuestionType <- function(type, product.name) {
+    if (!product.name %in% c("Displayr", "Q")) {
+        gettextf("The product name should be either Q or Displayr.") |> stop()
+    }
     stopifnot("The product name should be either Q or Displayr." = product.name %in% c("Displayr", "Q"))
     question.types <- list(Q = list("PickAny" = "Pick Any",
                                 "PickOne" = "Pick One",
@@ -367,7 +370,7 @@ GetTranslatedQuestionType <- function(type, product.name) {
                                 "Experiment" = "Experiment"))
     structure.name <- question.types[[product.name]][[type]]
     if (is.null(structure.name))
-        stop(type, " is not a valid Question Type to supply.")
+        gettextf("%s is not a valid Question Type to supply.", type) |> stop()
     structure.name
 }
 
