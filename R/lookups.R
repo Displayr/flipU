@@ -12,12 +12,14 @@ LookupName <- function(value, dictionary)
     if (is.list(dictionary))
         dictionary <- unlist(dictionary)
     if (is.null(names(dictionary)))
-        names(dictionary) <- 1:length(dictionary)
+        names(dictionary) <- seq_along(dictionary)
     matches <- dictionary %in% value
     if (all(!matches))
         return(NULL)
     nms <- names(dictionary)[matches]
-    if (length(nms) > 1)
-        warning(paste0("''", value, "'appears in the dictionnary multiple times. The first has been used."))
+    if (length(nms) > 1) {
+        gettextf("%s appears in the dictionnary multiple times. The first has been used.", sQuote(value)) |>
+            warning()
+    }
     nms[1]
 }

@@ -27,13 +27,13 @@ Select.default <- function(x, from, to, MARGIN = NULL, drop = FALSE)
 selectIndices <- function(names, from, to)
 {
     if (is.null(names))
-        stop("There are no names to select from.")
+        gettextf("There are no names to select from.") |> StopUserError()
     frm <- match(from, names)
     if (is.na(frm))
-        stop("'", from, "' is not one of the names.")
+        gettextf("%s is not one of the names.", sQuote(from)) |> StopUserError()
     t <- match(to, names)
     if (is.na(t))
-        stop(to, " is not one of the names.")
+        gettextf("%s is not one of the names.", sQuote(to)) |> StopUserError()
     frm:t
 }
 
@@ -51,7 +51,7 @@ Select.data.frame <- function(x, from, to, MARGIN = NULL, drop = FALSE)
 Select.matrix <- function(x, from, to, MARGIN = NULL, drop = FALSE)
 {
     if (is.null(MARGIN))
-        stop("'MARGIN needs to be specified. A 1 for rows and 2 for columns.")
+        gettextf("'MARGIN needs to be specified. A 1 for rows and 2 for columns.") |> StopUserError()
     Select.array(x, from, to, MARGIN, drop)
 }
 
@@ -60,10 +60,10 @@ Select.matrix <- function(x, from, to, MARGIN = NULL, drop = FALSE)
 Select.array <- function(x, from, to, MARGIN = NULL, drop = FALSE)
 {
     if (is.null(MARGIN))
-        stop("'MARGIN needs to be specified.")
+        gettextf("'MARGIN needs to be specified.") |> StopUserError()
     dims <- dim(x)
     if (!MARGIN %in% seq_len(length(dims)))
-        stop("'MARGIN' is invalid (not compatible with dimensions of the array).")
+        gettextf("'MARGIN' is invalid (not compatible with dimensions of the array).") |> StopUserError()
 
     names <- dimnames(x)[[MARGIN]]
     args <- c(list(x), rep(alist(, )[1L], length(dims)), drop = drop)

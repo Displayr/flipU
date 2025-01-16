@@ -284,19 +284,19 @@ AnyNegative <- function(x)
 #' @return logical.
 #' @export
 IsCount <- function(x) {
-    if(is.factor(x))
+    if (is.factor(x))
         return(FALSE)
-    else if (is.logical(x))
-        return (FALSE)
-    if(!is.numeric(x)) {
+    if (is.logical(x))
+        return(FALSE)
+    if (!is.numeric(x)) {
         if (!is.character(x))
             x <- x$type
-        return(x == "Poisson" | x == "Quasi-Poisson" | x == "NBD")
+        return(x == "Poisson" || x == "Quasi-Poisson" || x == "NBD")
     }
     x <- x[!is.na(x)]
     if (length(x) == 0)
-        stop("No data.")
-    u = unique(x)
+        StopUserError("No data.")
+    u <- unique(x)
     if (min(u, na.rm = TRUE) < 0)
         return(FALSE)
     sum(as.integer(u) != u, na.rm = TRUE) == 0}

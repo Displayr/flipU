@@ -13,7 +13,7 @@ be the environment of a Standard R output in Displayr or Q. Warn if there
 is more than one data set. The purpose of this is to warn a Displayr
 user if they have accidentally supplied data from multiple files. Most
 analysis methods assume the data comes from a single file. Using multiple
-files is dangerous because the number of cases may not match, and even if 
-the number of cases does match, there is no guarantee that the cases are 
+files is dangerous because the number of cases may not match, and even if
+the number of cases does match, there is no guarantee that the cases are
 in the same order.
 }
