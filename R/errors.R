@@ -9,7 +9,7 @@
 CheckVariableLengths <- function(variable.list, list.name)
 {
     if (length(unique(sapply(variable.list, length))) > 1)
-        StopUserError(list.name, " have differing lengths. Please ensure ",
+        StopForUserError(list.name, " have differing lengths. Please ensure ",
              "that they are from the same data set or have the same length.")
 }
 
@@ -17,7 +17,7 @@ CheckVariableLengths <- function(variable.list, list.name)
 #' @param call. Unused parameter, used to absorb usage from previous calls using stop
 #' @inheritParams base::stop
 #' @export
-StopUserError <- function(..., call. = FALSE, domain = NULL) {
+StopForUserError <- function(..., call. = FALSE, domain = NULL) {
     # Using a custom error condition and throwing using `stop` assumes the message
     # is already constructed from the custom error condition, so call. parameter is redundant
     call.used <- match.call()[["call."]]

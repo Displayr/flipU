@@ -231,7 +231,7 @@ MakeUniqueNames <- function(names, suffix = " ", prefix = "")
         names[ind.na] <- "NA"
     ind.dup <- which(duplicated(names))
     if (nchar(suffix) < 1)
-        StopUserError("'suffix' cannot be empty")
+        StopForUserError("'suffix' cannot be empty")
     for (i in ind.dup)
     {
         new.name <- paste0(prefix, names[i], suffix)
@@ -324,7 +324,7 @@ RequireQuestionType <- function(variables, required.type, message.prefix, messag
         structure.name <- GetTranslatedQuestionType(required.type, product.name)
         structure <- if (product.name == "Q") " question"  else " variable set"
         message.middle <- paste0(structure.name, structure)
-        StopUserError(message.prefix, message.middle, message.suffix)
+        StopForUserError(message.prefix, message.middle, message.suffix)
     }
 }
 
@@ -367,7 +367,7 @@ GetTranslatedQuestionType <- function(type, product.name) {
                                 "Experiment" = "Experiment"))
     structure.name <- question.types[[product.name]][[type]]
     if (is.null(structure.name))
-        StopUserError(type, " is not a valid Question Type to supply.")
+        StopForUserError(type, " is not a valid Question Type to supply.")
     structure.name
 }
 
