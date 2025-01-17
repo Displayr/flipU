@@ -295,7 +295,7 @@ IsCount <- function(x) {
     }
     x <- x[!is.na(x)]
     if (length(x) == 0)
-        stop("No data.")
+        StopForUserError("No data.")
     u = unique(x)
     if (min(u, na.rm = TRUE) < 0)
         return(FALSE)
