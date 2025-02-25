@@ -3,7 +3,7 @@
 
   inputs = {
     # requires you setup your ssh keys with github https://github.com/settings/keys
-    nixr.url = "git+ssh://git@github.com/Displayr/NixR.git";
+    nixr.url = "git+ssh://git@github.com/Displayr/NixR?ref=untracked-add-util-output";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
