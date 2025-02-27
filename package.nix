@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} , displayrUtils }:
+{ pkgs ? import <nixpkgs> {}, displayrUtils }:
 
 pkgs.rPackages.buildRPackage {
   name = "flipU";
