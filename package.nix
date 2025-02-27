@@ -5,5 +5,5 @@ pkgs.rPackages.buildRPackage {
   version = displayrUtils.extractRVersion (builtins.readFile ./DESCRIPTION); 
   src = ./.;
   description = "Utility functions used across multiple flip packages.";
-  propagatedBuildInputs = with pkgs.rPackages; [ pkgs.R R_utils ];
+  propagatedBuildInputs = with pkgs.rPackages; [ R_utils ];
 }
