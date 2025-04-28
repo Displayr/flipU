@@ -1,4 +1,4 @@
-context("lookups")
+# Testing lookups
 
 
 test_that("LookupName",{
@@ -14,4 +14,3 @@ test_that("LookupName",{
     expect_equal(LookupName(3, d1), NULL)
 
 })
-

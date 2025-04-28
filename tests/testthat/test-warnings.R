@@ -1,4 +1,4 @@
-context("warnings")
+# Testing warnings
 
 test_that("Warnings",
 {

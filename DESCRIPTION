@@ -12,4 +12,6 @@ Imports:
 Suggests:
     testthat
 RoxygenNote: 7.3.2
+Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8

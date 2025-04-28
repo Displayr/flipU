@@ -1,4 +1,4 @@
-context("properties")
+# Testing properties
 
 dat <- data.frame(a = rep((1:10)/10,2),
                   b = rep(1:10,2),
@@ -294,8 +294,8 @@ test_that("AllVariablesNames var in formula not in data",
           {
               dat <- data.frame(`a$b$c` = 1, x = 3, "`d$e$f`" = 2,
                                 check.names = FALSE)
-              out <- expect_warning(AllVariablesNames(`a$b$c` ~ . +z, data = dat),
-                                    "EncodeVars")
+              expect_warning(out <- AllVariablesNames(`a$b$c` ~ . +z, data = dat),
+                             "EncodeVars")
               ## backticks are added to any non-syntactic variable
               expect_equal(out[1], paste0("`", names(dat)[1], "`"))
               expect_equal(out[2:3], names(dat)[2:3])

@@ -1,4 +1,4 @@
-context("RemoveAt")
+# Testing RemoveAt
 
 # This is also tested extensively in flipTables:RemoveAtRowsAndOrColumns
 test_that("RemoveAt: Invalid 'at'", {

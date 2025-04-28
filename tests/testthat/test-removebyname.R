@@ -1,4 +1,4 @@
-context("RemoveByName")
+# Testing RemoveByName
 
 test_that("RemoveByName works with vector names",
 {

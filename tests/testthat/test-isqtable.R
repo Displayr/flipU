@@ -1,4 +1,4 @@
-context("Test ability to identify QTables")
+# Testing ability to identify QTables
 
 not.q.table <- array(1:12, dim = 3:4, dimnames = list(LETTERS[1:3], letters[1:4]))
 legacy.q.table <- not.q.table

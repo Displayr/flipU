@@ -1,4 +1,4 @@
-context("Select")
+# Testing Select
 
 test_that("Select: vector", {
     z <- 1:5
