@@ -5,7 +5,8 @@
 IsRServer <- function()
 {
     node.name <- Sys.info()[["nodename"]]
-    node.name == "reusdev" ||
+    Sys.getenv("IS_RSERVER") == '1' ||
+        node.name == "reusdev" ||
         grepl("^reustest.*", node.name) ||
         grepl("^r.*prod.*", node.name)
 }
@@ -18,7 +19,8 @@ IsRServer <- function()
 IsTestRServer <- function()
 {
     node.name <- Sys.info()[["nodename"]]
-    grepl("^reustest.*", node.name)
+    Sys.getenv("ENVIRONMENT") == "TEST" ||
+        grepl("^reustest.*", node.name)
 }
 
 #' @title IsDevRServer
