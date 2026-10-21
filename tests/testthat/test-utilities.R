@@ -50,6 +50,9 @@ test_that("MakeUniqueNames",
 {
     expect_equal(MakeUniqueNames(rep(letters[1:3], 1:3)), c("a", "b", "b ", "c", "c ", "c  "))
     expect_equal(MakeUniqueNames(c("A", "B", "C", NA, "A")), c("A", "B", "C", "NA", "A "))
+    # A new name must not be equal to a name that occurs later
+    expect_equal(MakeUniqueNames(c("A", "A", "A ")), c("A", "A  ", "A "))
+    expect_equal(MakeUniqueNames(c("A", "A", "xAy"), prefix = "x", suffix = "y"), c("A", "xxAyy", "xAy"))
 })
 
 test_that("EscapeRegexSymbols",
