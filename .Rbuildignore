@@ -6,3 +6,5 @@ runTravisTests.sh
 tools/travis_run_before_install.R$
 .circleci
 .github
+^AGENTS\.md$
+^CLAUDE\.md$
